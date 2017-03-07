@@ -15,35 +15,35 @@ class TileUrlHandler(tornado.web.RequestHandler):
         # add more allowed methods when adding more handlers (POST, PUT, etc.)
         self.set_header("Access-Control-Allow-Methods", "POST, OPTIONS")
 
-        def post(self):
-            json_data = tornado.escape.json_decode(self.request.body)
+    def post(self):
+        json_data = tornado.escape.json_decode(self.request.body)
 
-            # send the results back to the client
-            encoded_tiles = []
+        # send the results back to the client
+        encoded_tiles = []
 
-            for tile in data['tile']:
-                # get results from the given URL including tile image
-                res = requests.get(tile)
-                # encode the tile png into base64
-                encoded = base64.b64encode(res.content)
-                encoded_tiles.append(encoded)
+        for tile in data['tile']:
+            # get results from the given URL including tile image
+            res = requests.get(tile)
+            # encode the tile png into base64
+            encoded = base64.b64encode(res.content)
+            encoded_tiles.append(encoded)
 
-            # send the results as JSON format back to the client
-            self.write({'msg': encoded_tiles})
+        # send the results as JSON format back to the client
+        self.write({'msg': encoded_tiles})
 
-        def options(self):
-            # no body
-            self.set_status(204)
-            self.finish()
+    def options(self):
+        # no body
+        self.set_status(204)
+        self.finish()
 
 
-    def main():
-        application = tornado.web.Application([
-            (r"/tileUrl/", TileUrlHandler)
-            ], debug=True)
-        port = int(os.environ.get("PORT", 5000))
-        application.listen(port)
-        tornado.ioloop.IOLoop.current().start()
+def main():
+    application = tornado.web.Application([
+        (r"/tileUrl/", TileUrlHandler)
+        ], debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    application.listen(port)
+    tornado.ioloop.IOLoop.current().start()
 
-    if __name__ == "__main__":
-            main()
+if __name__ == "__main__":
+        main()
