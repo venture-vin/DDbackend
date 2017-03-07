@@ -5,7 +5,7 @@ import tornado.ioloop
 import tornado.web
 
 
-class getTileUrlHandler(tornado.web.RequestHandler):
+class TileUrlHandler(tornado.web.RequestHandler):
     # Headers set to avoid CORS issue of getting info from other URLs
 
     def set_default_headers(self):
@@ -39,7 +39,7 @@ class getTileUrlHandler(tornado.web.RequestHandler):
 
     def main():
         application = tornado.web.Application([
-            (r"/getEncodedUrl/", getTileUrlHandler)
+            (r"/getEncodedUrl/", TileUrlHandler)
             ], debug=True)
         port = int(os.environ.get("PORT", 5000))
         application.listen(port)
