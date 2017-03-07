@@ -39,7 +39,7 @@ class TileUrlHandler(tornado.web.RequestHandler):
 
     def main():
         application = tornado.web.Application([
-            (r"/getEncodedUrl/", TileUrlHandler)
+            (r"/tileUrl/", TileUrlHandler)
             ], debug=True)
         port = int(os.environ.get("PORT", 5000))
         application.listen(port)
