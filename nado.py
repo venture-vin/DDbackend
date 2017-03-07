@@ -13,7 +13,7 @@ class getTileUrlHandler(tornado.web.RequestHandler):
         self.set_header("Access-Control-Allow-Origin", "https://www.dronedeploy.com")
         self.set_header("Access-Control-Allow-Headers", "x-requested-with")
         # add more allowed methods when adding more handlers (POST, PUT, etc.)
-        self.set_header("Access-Control-Allow-Methods", "GET, OPTIONS")
+        self.set_header("Access-Control-Allow-Methods", "POST, OPTIONS")
 
         def post(self):
             json_data = tornado.escape.json_decode(self.request.body)
