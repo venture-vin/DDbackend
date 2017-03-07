@@ -1,14 +1,11 @@
 import os
-
+import base64
 import requests
 import tornado.ioloop
 import tornado.web
 
 
-GEOCODE_FMT = 'https://maps.googleapis.com/maps/api/geocode/json?address={address}&key={key}'
-
-
-class GeocodeHandler(tornado.web.RequestHandler):
+class getTileUrlHandler(tornado.web.RequestHandler):
     """Proxy a call to the Google Maps geocode API"""
 
     def set_default_headers(self):
@@ -18,30 +15,25 @@ class GeocodeHandler(tornado.web.RequestHandler):
         # add more allowed methods when adding more handlers (POST, PUT, etc.)
         self.set_header("Access-Control-Allow-Methods", "GET, OPTIONS")
 
-    def get(self):
-        api_key = os.environ.get("API_KEY")
-        address = self.get_query_argument("address")
-        url = GEOCODE_FMT.format(address=address, key=api_key)
-
-        # fetch results of the geocode from Google
-        response = requests.get(url)
+        def post(self):
+            json_data = tornado.escape.json_decode(self.request.body)
 
         # send the results back to the client
-        self.write(response.content)
+        self.write(json_data)
 
-    def options(self):
+        def options(self):
         # no body
         self.set_status(204)
         self.finish()
 
 
-def main():
-    application = tornado.web.Application([
-        (r"/geocode/", GeocodeHandler)
-    ])
-    port = int(os.environ.get("PORT", 5000))
-    application.listen(port)
-    tornado.ioloop.IOLoop.current().start()
+        def main():
+            application = tornado.web.Application([
+                (r"/getEncodedUrl/", getTileUrlHandler)
+                ])
+            port = int(os.environ.get("PORT", 5000))
+            application.listen(port)
+            tornado.ioloop.IOLoop.current().start()
 
-if __name__ == "__main__":
-    main()
+            if __name__ == "__main__":
+                main()
