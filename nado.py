@@ -37,13 +37,13 @@ class getTileUrlHandler(tornado.web.RequestHandler):
             self.finish()
 
 
-        def main():
-            application = tornado.web.Application([
-                (r"/getEncodedUrl/", getTileUrlHandler)
-                ])
-            port = int(os.environ.get("PORT", 5000))
-            application.listen(port)
-            tornado.ioloop.IOLoop.current().start()
+    def main():
+        application = tornado.web.Application([
+            (r"/getEncodedUrl/", getTileUrlHandler)
+            ], debug=True)
+        port = int(os.environ.get("PORT", 5000))
+        application.listen(port)
+        tornado.ioloop.IOLoop.current().start()
 
-        if __name__ == "__main__":
-                main()
+    if __name__ == "__main__":
+            main()
