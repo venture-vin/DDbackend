@@ -23,8 +23,8 @@ class getTileUrlHandler(tornado.web.RequestHandler):
 
         def options(self):
         # no body
-        self.set_status(204)
-        self.finish()
+            self.set_status(204)
+            self.finish()
 
 
         def main():
