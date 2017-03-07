@@ -19,7 +19,17 @@ class getTileUrlHandler(tornado.web.RequestHandler):
             json_data = tornado.escape.json_decode(self.request.body)
 
         # send the results back to the client
-        self.write(json_data)
+        encoded_tiles = []
+
+        for tile in data['tile']:
+            # get results from the given URL including tile image
+            res = requests.get(tile)
+            # encode the tile png into base64
+            encoded = base64.b64encode(res.content)
+            encoded_tiles.append(encoded)
+
+        # send the results as JSON format back to the client
+        self.write({'msg': encoded_tiles})
 
         def options(self):
         # no body
