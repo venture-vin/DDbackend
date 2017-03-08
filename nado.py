@@ -1,5 +1,4 @@
 import os
-import base64
 import requests
 import tornado.ioloop
 import tornado.web
@@ -18,18 +17,7 @@ class TileUrlHandler(tornado.web.RequestHandler):
     def post(self):
         json_data = tornado.escape.json_decode(self.request.body)
 
-        send the results back to the client
-        encoded_tiles = []
-
-        for tile in json_data['tile']:
-            # get results from the given URL including tile image
-            response = requests.get(tile)
-            # encode the tile png into base64
-            encoded = base64.b64encode(res.content)
-            encoded_tiles.append(encoded)
-
-        send the results as JSON format back to the client
-        self.write({'response': encoded_tiles; 'json': json_data})
+        self.write({'response': json_data})
 
     def options(self):
         # no body
