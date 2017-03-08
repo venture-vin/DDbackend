@@ -21,9 +21,9 @@ class TileUrlHandler(tornado.web.RequestHandler):
         # send the results back to the client
         encoded_tiles = []
 
-        for tile in data['tile']:
+        for tile in json_data['tile']:
             # get results from the given URL including tile image
-            res = requests.get(tile)
+            response = requests.get(tile)
             # encode the tile png into base64
             encoded = base64.b64encode(res.content)
             encoded_tiles.append(encoded)
@@ -39,7 +39,7 @@ class TileUrlHandler(tornado.web.RequestHandler):
 
 def main():
     application = tornado.web.Application([
-        (r"/tileUrl/", TileUrlHandler)
+        (r"/", TileUrlHandler)
         ], debug=True)
     port = int(os.environ.get("PORT", 5000))
     application.listen(port)
