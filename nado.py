@@ -18,7 +18,7 @@ class TileUrlHandler(tornado.web.RequestHandler):
     def post(self):
         json_data = tornado.escape.json_decode(self.request.body)
 
-        # send the results back to the client
+        send the results back to the client
         encoded_tiles = []
 
         for tile in json_data['tile']:
@@ -28,8 +28,8 @@ class TileUrlHandler(tornado.web.RequestHandler):
             encoded = base64.b64encode(res.content)
             encoded_tiles.append(encoded)
 
-        # send the results as JSON format back to the client
-        self.write({'msg': encoded_tiles})
+        send the results as JSON format back to the client
+        self.write({'response': encoded_tiles; 'json': json_data})
 
     def options(self):
         # no body
@@ -40,7 +40,7 @@ class TileUrlHandler(tornado.web.RequestHandler):
 def main():
     application = tornado.web.Application([
         (r"/", TileUrlHandler)
-        ], debug=True)
+    ], debug=True)
     port = int(os.environ.get("PORT", 5000))
     application.listen(port)
     tornado.ioloop.IOLoop.current().start()
